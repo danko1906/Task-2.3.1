@@ -27,31 +27,27 @@ public class AppConfig {
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName(env.getProperty("db.driver"));
-        dataSource.setUsername(env.getProperty("db.username"));
-        dataSource.setPassword(env.getProperty("db.password"));
-        dataSource.setUrl(env.getProperty("db.url"));
+        dataSource.setDriverClassName(env.getRequiredProperty("db.driver"));
+        dataSource.setUsername(env.getRequiredProperty("db.username"));
+        dataSource.setPassword(env.getRequiredProperty("db.password"));
+        dataSource.setUrl(env.getRequiredProperty("db.url"));
 
         return dataSource;
     }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean getEntityManager() {
-        String HBM2DLL = "hibernate.hbm2ddl.auto",
-                SHOW_SQL = "hibernate.show_sql",
-                PACKAGES_TO_SCAN = "web";
-
-        LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
+        LocalContainerEntityManagerFactoryBean entityManager =
+                new LocalContainerEntityManagerFactoryBean();
+        entityManager.setDataSource(getDataSource());
+        entityManager.setPackagesToScan("web.model");
 
         Properties properties = new Properties();
+        properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 
-        properties.setProperty(HBM2DLL, env.getProperty(HBM2DLL));
-        properties.setProperty(SHOW_SQL, env.getProperty(SHOW_SQL));
-
-        entityManager.setDataSource(getDataSource());
-        entityManager.setJpaProperties(properties);
-        entityManager.setPackagesToScan(PACKAGES_TO_SCAN);
         entityManager.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        entityManager.setJpaProperties(properties);
 
         return entityManager;
     }
@@ -64,5 +60,35 @@ public class AppConfig {
 
         return transactionManager;
     }
+    
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean getEntityManager() {
+//        String HBM2DLL = "hibernate.hbm2ddl.auto",
+//                SHOW_SQL = "hibernate.show_sql",
+//                PACKAGES_TO_SCAN = "web";
+//
+//        LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
+//
+//        Properties properties = new Properties();
+//
+//        properties.setProperty(HBM2DLL, env.getProperty(HBM2DLL));
+//        properties.setProperty(SHOW_SQL, env.getProperty(SHOW_SQL));
+//
+//        entityManager.setDataSource(getDataSource());
+//        entityManager.setJpaProperties(properties);
+//        entityManager.setPackagesToScan(PACKAGES_TO_SCAN);
+//        entityManager.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+//
+//        return entityManager;
+//    }
+
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean getEntityManager() {
+//        final LocalContainerEntityManagerFactoryBean entityManager  = new LocalContainerEntityManagerFactoryBean();
+//        entityManager .setDataSource(getDataSource());
+//        entityManager .setPackagesToScan(new String[] { "web" });
+//        entityManager .setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+//        return entityManager ;
+//    }
 
 }
