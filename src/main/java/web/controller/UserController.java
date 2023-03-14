@@ -69,11 +69,4 @@ public class UserController {
 
         return "redirect:/users";
     }
-
-//    @PostMapping("/delete")
-//    public String deleteUser(@RequestParam(value = "id") Integer id) {
-//        userService.deleteUser(id);
-//
-//        return "redirect:/users";
-//    }
 }

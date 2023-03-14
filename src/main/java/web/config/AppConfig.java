@@ -60,35 +60,4 @@ public class AppConfig {
 
         return transactionManager;
     }
-    
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean getEntityManager() {
-//        String HBM2DLL = "hibernate.hbm2ddl.auto",
-//                SHOW_SQL = "hibernate.show_sql",
-//                PACKAGES_TO_SCAN = "web";
-//
-//        LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
-//
-//        Properties properties = new Properties();
-//
-//        properties.setProperty(HBM2DLL, env.getProperty(HBM2DLL));
-//        properties.setProperty(SHOW_SQL, env.getProperty(SHOW_SQL));
-//
-//        entityManager.setDataSource(getDataSource());
-//        entityManager.setJpaProperties(properties);
-//        entityManager.setPackagesToScan(PACKAGES_TO_SCAN);
-//        entityManager.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-//
-//        return entityManager;
-//    }
-
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean getEntityManager() {
-//        final LocalContainerEntityManagerFactoryBean entityManager  = new LocalContainerEntityManagerFactoryBean();
-//        entityManager .setDataSource(getDataSource());
-//        entityManager .setPackagesToScan(new String[] { "web" });
-//        entityManager .setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-//        return entityManager ;
-//    }
-
 }
